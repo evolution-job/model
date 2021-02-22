@@ -158,6 +158,13 @@ class StatementsFilter
         return $this;
     }
 
+    public function cursor(int $cursor): self
+    {
+        $this->filter['cursor'] = $cursor;
+
+        return $this;
+    }
+
     /**
      * Returns the generated filter.
      */
