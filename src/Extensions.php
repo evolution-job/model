@@ -58,7 +58,7 @@ final class Extensions implements \ArrayAccess
             throw new \InvalidArgumentException(sprintf('Expected an IRI instance as key (got %s).', is_object($offset) ? get_class($offset) : gettype($offset)));
         }
 
-        if (!isset($this->extensions[$offset->getValue()])) {
+        if (!array_key_exists($offset->getValue(), $this->extensions)) {
             throw new \InvalidArgumentException(sprintf('No extension for key "%s" registered.', $offset->getValue()));
         }
 
