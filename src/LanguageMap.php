@@ -118,4 +118,51 @@ final class LanguageMap implements \ArrayAccess, \Countable
 
         return true;
     }
+
+    public static function isValidTag(string $tag): bool
+    {
+        $parts = explode('-', $tag);
+
+        $language = $parts[0] ?? null;
+        $extLang = $parts[1] ?? null;
+        $script = $parts[2] ?? null;
+        $region = $parts[3] ?? null;
+        $variant = $parts[4] ?? null;
+        $extension = $parts[5] ?? null;
+        $privateUse = $parts[6] ?? null;
+
+        if (!in_array(strlen($language), [2, 3])) {
+            return false;
+        }
+
+        if (isset($extLang) && !in_array(strlen($extLang), [2, 3])) {
+            return false;
+        }
+
+        if (isset($script) && 4 !== strlen($script)) {
+            return false;
+        }
+
+        if (isset($region) && 2 !== strlen($region)) {
+            return false;
+        }
+
+        if (isset($variant) && !in_array(strlen($variant), [5, 8])) {
+            return false;
+        }
+
+        if (isset($extension) && strlen($extension) < 1) {
+            return false;
+        }
+
+        if (isset($privateUse) && strlen($privateUse) < 1) {
+            return false;
+        }
+
+        if (isset($extLang, $extension) && $extLang === $extension) {
+            return false;
+        }
+
+        return true;
+    }
 }
