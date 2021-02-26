@@ -109,4 +109,9 @@ final class Uuid
     {
         return $this->uuid->equals($uuid->uuid);
     }
+
+    public static function isValid(string $uuid): bool
+    {
+        return RamseyUuid::isValid($uuid);
+    }
 }
