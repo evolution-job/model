@@ -40,9 +40,8 @@ final class Attachment
      */
     public function __construct(IRI $usageType, string $contentType, int $length, string $sha2, LanguageMap $display, LanguageMap $description = null, IRL $fileUrl = null, string $content = null)
     {
-        if (null === $fileUrl && null === $content) {
-            throw new \InvalidArgumentException('An attachment cannot be created without a file URL or raw content data.');
-        }
+        $this->validateContentType($contentType);
+        $this->validateFileUrl($fileUrl, $content);
 
         $this->usageType = $usageType;
         $this->contentType = $contentType;
@@ -133,5 +132,27 @@ final class Attachment
         }
 
         return true;
+    }
+
+    private function validateContentType($contentType)
+    {
+        $topLevels = ['text', 'image', 'audio', 'video', 'application'];
+
+        $parts = explode('/', $contentType);
+
+        if (!in_array($parts[0], $topLevels)) {
+            throw new \InvalidArgumentException('Attachment contentType property if no valid.');
+        }
+    }
+
+    private function validateFileUrl(IRL $fileUrl = null, $content = null)
+    {
+        if (null === $fileUrl && null === $content) {
+            throw new \InvalidArgumentException('An attachment cannot be created without a file URL or raw content data.');
+        }
+
+        if ($fileUrl && false === filter_var($fileUrl->getValue(), FILTER_VALIDATE_URL)) {
+            throw new \InvalidArgumentException('Attachment file URL is not valid.');
+        }
     }
 }
