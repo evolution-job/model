@@ -29,6 +29,10 @@ final class IRL
      */
     public static function fromString(string $value): self
     {
+        if (false === filter_var($value, FILTER_VALIDATE_URL)) {
+            throw new \InvalidArgumentException('IRI "'.$value.'" is not valid.');
+        }
+
         $iri = new self();
         $iri->value = $value;
 
