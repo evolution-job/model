@@ -119,8 +119,12 @@ final class LanguageMap implements \ArrayAccess, \Countable
         return true;
     }
 
-    public static function isValidTag(string $tag): bool
+    public static function isValidTag($tag): bool
     {
+        if (!is_string($tag)) {
+            return false;
+        }
+
         $parts = explode('-', $tag);
 
         $language = $parts[0] ?? null;
