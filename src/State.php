@@ -82,9 +82,9 @@ final class State
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getData(): ?string
+    public function getData()
     {
         return $this->data;
     }

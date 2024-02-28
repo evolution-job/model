@@ -1,10 +1,17 @@
 CHANGELOG
 =========
 
+3.3.0
+-----
+
+* Added support for PHP 8.x
+* Code Style
+* All dependencies from php-xapi/* are now loaded from forks at `https://github.com/evolution-job/`
+
 3.2.0
 -----
 
-* Added support for PHP 8.
+* Add data to State
 
 3.1.0
 -----
@@ -140,21 +147,21 @@ In terms of existing classes and methods, there is no difference to the
 * The type of the following properties has been changed from `string` to
   instances of the new `IRI` class:
 
-  * `Activity::$id`
-  * `Attachment::$usageType`
-  * `Definition::$type`
-  * `InverseFunctionalIdentifier::$mbox`
-  * `Verb::$id`
+    * `Activity::$id`
+    * `Attachment::$usageType`
+    * `Definition::$type`
+    * `InverseFunctionalIdentifier::$mbox`
+    * `Verb::$id`
 
   Type hints of respective methods have been updated accordingly.
 
 * The type of the following properties has been changed from `string` to
   instances of the new `IRL` class:
 
-  * `Account::$homePage`
-  * `Attachment::$fileUrl`
-  * `Definition::$moreInfo`
-  * `StatementResult::$moreUrlPath`
+    * `Account::$homePage`
+    * `Attachment::$fileUrl`
+    * `Definition::$moreInfo`
+    * `StatementResult::$moreUrlPath`
 
   Type hints of respective methods have been updated accordingly.
 
@@ -180,16 +187,16 @@ In terms of existing classes and methods, there is no difference to the
   an abstract `InteractionDefinition` class which in turn is a child class
   of the already existing `Definition` class):
 
-   * `ChoiceInteractionDefinition`
-   * `FillInInteractionDefinition`
-   * `LikertInteractionDefinition`
-   * `LongFillInInteractionDefinition`
-   * `MatchingInteractionDefinition`
-   * `NumericInteractionDefinition`
-   * `OtherInteractionDefinition`
-   * `PerformanceInteractionDefinition`
-   * `SequencingInteractionDefinition`
-   * `TrueFalseInteractionDefinition`
+    * `ChoiceInteractionDefinition`
+    * `FillInInteractionDefinition`
+    * `LikertInteractionDefinition`
+    * `LongFillInInteractionDefinition`
+    * `MatchingInteractionDefinition`
+    * `NumericInteractionDefinition`
+    * `OtherInteractionDefinition`
+    * `PerformanceInteractionDefinition`
+    * `SequencingInteractionDefinition`
+    * `TrueFalseInteractionDefinition`
 
   Interaction components which are part of some of the new definition classes
   will be handled by `InteractionComponent` instances.
