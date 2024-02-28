@@ -28,10 +28,6 @@ final class Agent extends Actor
      */
     public function equals(StatementObject $actor): bool
     {
-        if (!parent::equals($actor)) {
-            return false;
-        }
-
-        return true;
+        return parent::equals($actor);
     }
 }

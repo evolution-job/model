@@ -36,12 +36,12 @@ final class StatementReference extends StatementObject
     /**
      * {@inheritdoc}
      */
-    public function equals(StatementObject $object): bool
+    public function equals(StatementObject $statementObject): bool
     {
-        if (!$object instanceof StatementReference) {
+        if (!$statementObject instanceof self) {
             return false;
         }
 
-        return $this->statementId->equals($object->statementId);
+        return $this->statementId->equals($statementObject->statementId);
     }
 }

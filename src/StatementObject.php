@@ -23,8 +23,8 @@ abstract class StatementObject
      *
      * Two objects are equal if and only if all of their properties are equal.
      */
-    public function equals(StatementObject $object): bool
+    public function equals(StatementObject $statementObject): bool
     {
-        return get_class($this) === get_class($object);
+        return get_class($this) === get_class($statementObject);
     }
 }

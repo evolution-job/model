@@ -11,6 +11,9 @@
 
 namespace Xabbuh\XApi\Model;
 
+use DateTime;
+use InvalidArgumentException;
+
 /**
  * A {@link Statement} included as part of a parent Statement.
  *
@@ -29,15 +32,15 @@ final class SubStatement extends StatementObject
     /**
      * @param Attachment[]|null $attachments
      */
-    public function __construct(Actor $actor, Verb $verb, StatementObject $object, Result $result = null, Context $context = null, \DateTime $created = null, array $attachments = null)
+    public function __construct(Actor $actor, Verb $verb, StatementObject $statementObject, Result $result = null, Context $context = null, DateTime $created = null, array $attachments = null)
     {
-        if ($object instanceof SubStatement) {
-            throw new \InvalidArgumentException('Nesting sub statements is forbidden by the xAPI spec.');
+        if ($statementObject instanceof SubStatement) {
+            throw new InvalidArgumentException('Nesting sub statements is forbidden by the xAPI spec.');
         }
 
         $this->actor = $actor;
         $this->verb = $verb;
-        $this->object = $object;
+        $this->object = $statementObject;
         $this->result = $result;
         $this->created = $created;
         $this->context = $context;
@@ -60,10 +63,10 @@ final class SubStatement extends StatementObject
         return $subStatement;
     }
 
-    public function withObject(StatementObject $object): self
+    public function withObject(StatementObject $statementObject): self
     {
         $subStatement = clone $this;
-        $subStatement->object = $object;
+        $subStatement->object = $statementObject;
 
         return $subStatement;
     }
@@ -76,7 +79,7 @@ final class SubStatement extends StatementObject
         return $subStatement;
     }
 
-    public function withCreated(\DateTime $created = null): self
+    public function withCreated(DateTime $created = null): self
     {
         $statement = clone $this;
         $statement->created = $created;
@@ -139,7 +142,7 @@ final class SubStatement extends StatementObject
      * Returns the timestamp of when the events described in this statement
      * occurred.
      */
-    public function getCreated(): ?\DateTime
+    public function getCreated(): ?DateTime
     {
         return $this->created;
     }
@@ -172,59 +175,59 @@ final class SubStatement extends StatementObject
     /**
      * {@inheritdoc}
      */
-    public function equals(StatementObject $statement): bool
+    public function equals(StatementObject $statementObject): bool
     {
-        if (!$statement instanceof SubStatement) {
+        if (!$statementObject instanceof SubStatement) {
             return false;
         }
 
-        if (!$this->actor->equals($statement->actor)) {
+        if (!$this->actor->equals($statementObject->actor)) {
             return false;
         }
 
-        if (!$this->verb->equals($statement->verb)) {
+        if (!$this->verb->equals($statementObject->verb)) {
             return false;
         }
 
-        if (!$this->object->equals($statement->object)) {
+        if (!$this->object->equals($statementObject->object)) {
             return false;
         }
 
-        if (null === $this->result && null !== $statement->result) {
+        if (null === $this->result && null !== $statementObject->result) {
             return false;
         }
 
-        if (null !== $this->result && null === $statement->result) {
+        if (null !== $this->result && null === $statementObject->result) {
             return false;
         }
 
-        if (null !== $this->result && !$this->result->equals($statement->result)) {
+        if (null !== $this->result && !$this->result->equals($statementObject->result)) {
             return false;
         }
 
-        if ($this->created != $statement->created) {
+        if ($this->created != $statementObject->created) {
             return false;
         }
 
-        if (null !== $this->context xor null !== $statement->context) {
+        if (null !== $this->context xor null !== $statementObject->context) {
             return false;
         }
 
-        if (null !== $this->context && null !== $statement->context && !$this->context->equals($statement->context)) {
+        if (null !== $this->context && null !== $statementObject->context && !$this->context->equals($statementObject->context)) {
             return false;
         }
 
-        if (null !== $this->attachments xor null !== $statement->attachments) {
+        if (null !== $this->attachments xor null !== $statementObject->attachments) {
             return false;
         }
 
-        if (null !== $this->attachments && null !== $statement->attachments) {
-            if (count($this->attachments) !== count($statement->attachments)) {
+        if (null !== $this->attachments && null !== $statementObject->attachments) {
+            if (count($this->attachments) !== count($statementObject->attachments)) {
                 return false;
             }
 
             foreach ($this->attachments as $key => $attachment) {
-                if (!$attachment->equals($statement->attachments[$key])) {
+                if (!$attachment->equals($statementObject->attachments[$key])) {
                     return false;
                 }
             }

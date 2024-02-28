@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use ArrayAccess;
+use InvalidArgumentException;
 use Xabbuh\XApi\Common\Exception\UnsupportedOperationException;
 
 /**
@@ -22,11 +24,11 @@ use Xabbuh\XApi\Common\Exception\UnsupportedOperationException;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-final class DocumentData implements \ArrayAccess
+final class DocumentData implements ArrayAccess
 {
-    private $data = array();
+    private $data;
 
-    public function __construct(array $data = array())
+    public function __construct(array $data = [])
     {
         $this->data = $data;
     }
@@ -45,7 +47,7 @@ final class DocumentData implements \ArrayAccess
     public function offsetGet($offset)
     {
         if (!isset($this->data[$offset])) {
-            throw new \InvalidArgumentException(sprintf('No data for name "%s" registered.', $offset));
+            throw new InvalidArgumentException(sprintf('No data for name "%s" registered.', $offset));
         }
 
         return $this->data[$offset];

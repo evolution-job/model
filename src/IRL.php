@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use InvalidArgumentException;
+
 /**
  * An internationalized resource locator.
  *
@@ -25,7 +27,7 @@ final class IRL
     }
 
     /**
-     * @throws \InvalidArgumentException if the given value is no valid IRL
+     * @throws InvalidArgumentException if the given value is no valid IRL
      */
     public static function fromString(string $value): self
     {

@@ -11,12 +11,17 @@
 
 namespace Xabbuh\XApi\Model;
 
+use ArrayAccess;
+use Countable;
+use InvalidArgumentException;
+use LogicException;
+
 /**
  * Read-only dictionary mapping RFC 5646 language tags to translated strings.
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-final class LanguageMap implements \ArrayAccess, \Countable
+final class LanguageMap implements ArrayAccess, Countable
 {
     private $map;
 
@@ -62,37 +67,37 @@ final class LanguageMap implements \ArrayAccess, \Countable
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($languageTag): bool
+    public function offsetExists($offset): bool
     {
-        return isset($this->map[$languageTag]);
+        return isset($this->map[$offset]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($languageTag): string
+    public function offsetGet($offset): string
     {
-        if (!isset($this->map[$languageTag])) {
-            throw new \InvalidArgumentException(sprintf('The requested language tag "%s" does not exist in this language map.', $languageTag));
+        if (!isset($this->map[$offset])) {
+            throw new InvalidArgumentException(sprintf('The requested language tag "%s" does not exist in this language map.', $offset));
         }
 
-        return $this->map[$languageTag];
+        return $this->map[$offset];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($languageTag, $value): void
+    public function offsetSet($offset, $value): void
     {
-        throw new \LogicException('The values of a language map cannot be modified. Use withEntry() instead to retrieve a new language map with the added or modified value.');
+        throw new LogicException('The values of a language map cannot be modified. Use withEntry() instead to retrieve a new language map with the added or modified value.');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($languageTag): void
+    public function offsetUnset($offset): void
     {
-        throw new \LogicException('Entries of a language map cannot be removed.');
+        throw new LogicException('Entries of a language map cannot be removed.');
     }
 
     public function count(): int

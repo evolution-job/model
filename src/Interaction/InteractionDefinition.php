@@ -22,7 +22,7 @@ use Xabbuh\XApi\Model\LanguageMap;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-abstract class InteractionDefinition extends Definition
+class InteractionDefinition extends Definition
 {
     private $correctResponsesPattern;
 
@@ -61,7 +61,7 @@ abstract class InteractionDefinition extends Definition
             return false;
         }
 
-        if (!$definition instanceof InteractionDefinition) {
+        if (!$definition instanceof self) {
             return false;
         }
 
@@ -74,8 +74,8 @@ abstract class InteractionDefinition extends Definition
                 return false;
             }
 
-            foreach ($this->correctResponsesPattern as $value) {
-                if (!in_array($value, $definition->correctResponsesPattern, true)) {
+            foreach ($this->correctResponsesPattern as $correctResponsePattern) {
+                if (!in_array($correctResponsePattern, $definition->correctResponsesPattern, true)) {
                     return false;
                 }
             }

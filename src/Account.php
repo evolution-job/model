@@ -54,10 +54,6 @@ final class Account
             return false;
         }
 
-        if (!$this->homePage->equals($account->homePage)) {
-            return false;
-        }
-
-        return true;
+        return $this->homePage->equals($account->homePage);
     }
 }

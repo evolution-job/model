@@ -132,7 +132,7 @@ final class Score
             return false;
         }
 
-        if ((float) $this->scaled !== (float) $score->scaled) {
+        if ((float)$this->scaled !== (float)$score->scaled) {
             return false;
         }
 
@@ -140,7 +140,7 @@ final class Score
             return false;
         }
 
-        if ((float) $this->raw !== (float) $score->raw) {
+        if ((float)$this->raw !== (float)$score->raw) {
             return false;
         }
 
@@ -148,7 +148,7 @@ final class Score
             return false;
         }
 
-        if ((float) $this->min !== (float) $score->min) {
+        if ((float)$this->min !== (float)$score->min) {
             return false;
         }
 
@@ -156,10 +156,6 @@ final class Score
             return false;
         }
 
-        if ((float) $this->max !== (float) $score->max) {
-            return false;
-        }
-
-        return true;
+        return (float)$this->max === (float)$score->max;
     }
 }

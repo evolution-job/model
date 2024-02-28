@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use InvalidArgumentException;
+
 /**
  * An internationalized resource identifier according to RFC 3987.
  *
@@ -25,7 +27,7 @@ final class IRI
     }
 
     /**
-     * @throws \InvalidArgumentException if the given value is no valid IRI
+     * @throws InvalidArgumentException if the given value is no valid IRI
      */
     public static function fromString(string $value): self
     {

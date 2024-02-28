@@ -63,7 +63,7 @@ final class PerformanceInteractionDefinition extends InteractionDefinition
             return false;
         }
 
-        if (!$definition instanceof PerformanceInteractionDefinition) {
+        if (!$definition instanceof self) {
             return false;
         }
 

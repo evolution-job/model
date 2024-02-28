@@ -21,27 +21,27 @@ final class Person
     /**
      * @var string[] List of names of Agents
      */
-    private $names = array();
+    private $names = [];
 
     /**
      * @var IRI[] List of mailto IRIs of Agents
      */
-    private $mboxes = array();
+    private $mboxes = [];
 
     /**
      * @var string[] List of the SHA1 hashes of mailto IRIs of Agents
      */
-    private $mboxSha1Sums = array();
+    private $mboxSha1Sums = [];
 
     /**
      * @var string[] List of openids that uniquely identify the Agents
      */
-    private $openIds = array();
+    private $openIds = [];
 
     /**
      * @var Account[] List of accounts of Agents
      */
-    private $accounts = array();
+    private $accounts = [];
 
     private function __construct()
     {
@@ -55,7 +55,15 @@ final class Person
         $person = new self();
 
         foreach ($agents as $agent) {
+
+            if (null !== $name = $agent->getName()) {
+                $person->names[] = $name;
+            }
+
             $iri = $agent->getInverseFunctionalIdentifier();
+            if (null === $iri) {
+                continue;
+            }
 
             if (null !== $mbox = $iri->getMbox()) {
                 $person->mboxes[] = $mbox;
@@ -71,10 +79,6 @@ final class Person
 
             if (null !== $account = $iri->getAccount()) {
                 $person->accounts[] = $account;
-            }
-
-            if (null !== $name = $agent->getName()) {
-                $person->names[] = $name;
             }
         }
 

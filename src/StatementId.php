@@ -44,7 +44,7 @@ final class StatementId
 
     public function getValue(): string
     {
-        return (string) $this->uuid;
+        return (string)$this->uuid;
     }
 
     public function equals(StatementId $id): bool

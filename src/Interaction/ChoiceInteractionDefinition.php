@@ -63,7 +63,7 @@ final class ChoiceInteractionDefinition extends InteractionDefinition
             return false;
         }
 
-        if (!$definition instanceof ChoiceInteractionDefinition) {
+        if (!$definition instanceof self) {
             return false;
         }
 

@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use DateTime;
+
 /**
  * Filter to apply on GET requests to the states API.
  *
@@ -21,7 +23,7 @@ class StateDocumentsFilter
     /**
      * @var array The generated filter
      */
-    private $filter = array();
+    private $filter = [];
 
     /**
      * Filter by an Activity.
@@ -56,7 +58,7 @@ class StateDocumentsFilter
     /**
      * Filters for State documents stored since the specified timestamp (exclusive).
      */
-    public function since(\DateTime $timestamp): self
+    public function since(DateTime $timestamp): self
     {
         $this->filter['since'] = $timestamp->format('c');
 

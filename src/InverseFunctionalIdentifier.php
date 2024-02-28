@@ -33,34 +33,34 @@ final class InverseFunctionalIdentifier
 
     public static function withMbox(IRI $mbox): self
     {
-        $iri = new InverseFunctionalIdentifier();
-        $iri->mbox = $mbox;
+        $inverseFunctionalIdentifier = new InverseFunctionalIdentifier();
+        $inverseFunctionalIdentifier->mbox = $mbox;
 
-        return $iri;
+        return $inverseFunctionalIdentifier;
     }
 
     public static function withMboxSha1Sum(string $mboxSha1Sum): self
     {
-        $iri = new InverseFunctionalIdentifier();
-        $iri->mboxSha1Sum = $mboxSha1Sum;
+        $inverseFunctionalIdentifier = new InverseFunctionalIdentifier();
+        $inverseFunctionalIdentifier->mboxSha1Sum = $mboxSha1Sum;
 
-        return $iri;
+        return $inverseFunctionalIdentifier;
     }
 
     public static function withOpenId(string $openId): self
     {
-        $iri = new InverseFunctionalIdentifier();
-        $iri->openId = $openId;
+        $inverseFunctionalIdentifier = new InverseFunctionalIdentifier();
+        $inverseFunctionalIdentifier->openId = $openId;
 
-        return $iri;
+        return $inverseFunctionalIdentifier;
     }
 
     public static function withAccount(Account $account): self
     {
-        $iri = new InverseFunctionalIdentifier();
-        $iri->account = $account;
+        $inverseFunctionalIdentifier = new InverseFunctionalIdentifier();
+        $inverseFunctionalIdentifier->account = $account;
 
-        return $iri;
+        return $inverseFunctionalIdentifier;
     }
 
     /**
@@ -136,14 +136,6 @@ final class InverseFunctionalIdentifier
             return $this->mbox->getValue();
         }
 
-        if (null !== $this->mboxSha1Sum) {
-            return $this->mboxSha1Sum;
-        }
-
-        if (null !== $this->openId) {
-            return $this->openId;
-        }
-
-        return sprintf('%s (%s)', $this->account->getName(), $this->account->getHomePage()->getValue());
+        return ($this->mboxSha1Sum ?? $this->openId) ?? sprintf('%s (%s)', $this->account->getName(), $this->account->getHomePage()->getValue());
     }
 }

@@ -46,25 +46,25 @@ final class Activity extends StatementObject
     /**
      * {@inheritdoc}
      */
-    public function equals(StatementObject $object): bool
+    public function equals(StatementObject $statementObject): bool
     {
-        if (!$object instanceof Activity) {
+        if (!$statementObject instanceof self) {
             return false;
         }
 
-        if (!$this->id->equals($object->id)) {
+        if (!$this->id->equals($statementObject->id)) {
             return false;
         }
 
-        if (null === $this->definition && null !== $object->definition) {
+        if (null === $this->definition && null !== $statementObject->definition) {
             return false;
         }
 
-        if (null !== $this->definition && null === $object->definition) {
+        if (null !== $this->definition && null === $statementObject->definition) {
             return false;
         }
 
-        if (null !== $this->definition && !$this->definition->equals($object->definition)) {
+        if (null !== $this->definition && !$this->definition->equals($statementObject->definition)) {
             return false;
         }
 

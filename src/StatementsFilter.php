@@ -18,7 +18,7 @@ namespace Xabbuh\XApi\Model;
  */
 class StatementsFilter
 {
-    private $filter = array();
+    private $filter = [];
 
     /**
      * Filters by an Agent or an identified Group.

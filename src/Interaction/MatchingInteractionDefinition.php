@@ -26,6 +26,7 @@ use Xabbuh\XApi\Model\LanguageMap;
 final class MatchingInteractionDefinition extends InteractionDefinition
 {
     private $source;
+
     private $target;
 
     /**
@@ -85,7 +86,7 @@ final class MatchingInteractionDefinition extends InteractionDefinition
             return false;
         }
 
-        if (!$definition instanceof MatchingInteractionDefinition) {
+        if (!$definition instanceof self) {
             return false;
         }
 

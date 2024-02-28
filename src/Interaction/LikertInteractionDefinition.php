@@ -63,7 +63,7 @@ final class LikertInteractionDefinition extends InteractionDefinition
             return false;
         }
 
-        if (!$definition instanceof LikertInteractionDefinition) {
+        if (!$definition instanceof self) {
             return false;
         }
 

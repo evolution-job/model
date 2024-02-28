@@ -18,7 +18,7 @@ namespace Xabbuh\XApi\Model;
  */
 final class Group extends Actor
 {
-    private $members = array();
+    private $members = [];
 
     /**
      * @param Agent[] $members

@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use ArrayAccess;
+
 /**
  * An Experience API document.
  *
@@ -20,7 +22,7 @@ namespace Xabbuh\XApi\Model;
  *
  * @author Christian Flothmann <christian.flothmann@xabbuh.de>
  */
-abstract class Document implements \ArrayAccess
+abstract class Document implements ArrayAccess
 {
     private $data;
 

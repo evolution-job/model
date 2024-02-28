@@ -197,10 +197,6 @@ class Definition
             }
         }
 
-        if (null !== $this->extensions && null !== $definition->extensions && !$this->extensions->equals($definition->extensions)) {
-            return false;
-        }
-
-        return true;
+        return !(null !== $this->extensions && null !== $definition->extensions && !$this->extensions->equals($definition->extensions));
     }
 }

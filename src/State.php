@@ -52,7 +52,7 @@ final class State
      */
     public function getActor(): Actor
     {
-        @trigger_error(sprintf('The "%s()" method is deprecated since 1.2 and will be removed in 3.0, use "%s::getAgent()" instead.', __METHOD__, __CLASS__), E_USER_DEPRECATED);
+        @trigger_error(sprintf('The "%s()" method is deprecated since 1.2 and will be removed in 3.0, use "%s::getAgent()" instead.', __METHOD__, self::class), E_USER_DEPRECATED);
 
         return $this->getAgent();
     }
@@ -84,7 +84,7 @@ final class State
     /**
      * @return string
      */
-    public function getData()
+    public function getData(): ?string
     {
         return $this->data;
     }

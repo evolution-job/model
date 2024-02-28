@@ -62,7 +62,7 @@ final class SequencingInteractionDefinition extends InteractionDefinition
             return false;
         }
 
-        if (!$definition instanceof SequencingInteractionDefinition) {
+        if (!$definition instanceof self) {
             return false;
         }
 

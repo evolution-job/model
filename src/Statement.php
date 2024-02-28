@@ -11,6 +11,8 @@
 
 namespace Xabbuh\XApi\Model;
 
+use DateTime;
+
 /**
  * An Experience API {@link https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#statement Statement}.
  *
@@ -33,12 +35,12 @@ final class Statement
     /**
      * @param Attachment[]|null $attachments
      */
-    public function __construct(StatementId $id = null, Actor $actor, Verb $verb, StatementObject $object, Result $result = null, Actor $authority = null, \DateTime $created = null, \DateTime $stored = null, Context $context = null, array $attachments = null, string $version = null)
+    public function __construct(StatementId $id = null, Actor $actor, Verb $verb, StatementObject $statementObject, Result $result = null, Actor $authority = null, DateTime $created = null, DateTime $stored = null, Context $context = null, array $attachments = null, string $version = null)
     {
         $this->id = $id;
         $this->actor = $actor;
         $this->verb = $verb;
-        $this->object = $object;
+        $this->object = $statementObject;
         $this->result = $result;
         $this->authority = $authority;
         $this->created = $created;
@@ -72,10 +74,10 @@ final class Statement
         return $statement;
     }
 
-    public function withObject(StatementObject $object): self
+    public function withObject(StatementObject $statementObject): self
     {
         $statement = clone $this;
-        $statement->object = $object;
+        $statement->object = $statementObject;
 
         return $statement;
     }
@@ -100,7 +102,7 @@ final class Statement
         return $statement;
     }
 
-    public function withCreated(\DateTime $created = null): self
+    public function withCreated(DateTime $created = null): self
     {
         $statement = clone $this;
         $statement->created = $created;
@@ -108,7 +110,7 @@ final class Statement
         return $statement;
     }
 
-    public function withStored(\DateTime $stored = null): self
+    public function withStored(DateTime $stored = null): self
     {
         $statement = clone $this;
         $statement->stored = $stored;
@@ -195,7 +197,7 @@ final class Statement
      * Returns the timestamp of when the events described in this statement
      * occurred.
      */
-    public function getCreated(): ?\DateTime
+    public function getCreated(): ?DateTime
     {
         return $this->created;
     }
@@ -203,7 +205,7 @@ final class Statement
     /**
      * Returns the timestamp of when this statement was recorded by the LRS.
      */
-    public function getStored(): ?\DateTime
+    public function getStored(): ?DateTime
     {
         return $this->stored;
     }
