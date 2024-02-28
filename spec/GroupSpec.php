@@ -35,7 +35,7 @@ class GroupSpec extends ObjectBehavior
     function its_properties_can_be_read()
     {
         $iri = InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com'));
-        $members = array(new Agent(InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com'))));
+        $members = [new Agent(InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com')))];
         $this->beConstructedWith($iri, 'test', $members);
 
         $this->getInverseFunctionalIdentifier()->shouldReturn($iri);

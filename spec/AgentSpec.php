@@ -20,30 +20,30 @@ use Xabbuh\XApi\Model\IRI;
 
 class AgentSpec extends ObjectBehavior
 {
-    function it_is_an_actor()
+    public function it_is_an_actor(): void
     {
-        $iri = InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com'));
-        $this->beConstructedWith($iri);
+        $inverseFunctionalIdentifier = InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com'));
+        $this->beConstructedWith($inverseFunctionalIdentifier);
         $this->shouldHaveType(Actor::class);
     }
 
-    function its_properties_can_be_read()
+    public function its_properties_can_be_read(): void
     {
-        $iri = InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com'));
-        $this->beConstructedWith($iri, 'test');
+        $inverseFunctionalIdentifier = InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com'));
+        $this->beConstructedWith($inverseFunctionalIdentifier, 'test');
 
-        $this->getInverseFunctionalIdentifier()->shouldReturn($iri);
+        $this->getInverseFunctionalIdentifier()->shouldReturn($inverseFunctionalIdentifier);
         $this->getName()->shouldReturn('test');
     }
 
-    function it_is_not_equal_to_a_group()
+    public function it_is_not_equal_to_a_group(): void
     {
         $this->beConstructedWith(InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com')));
 
         $this->equals(new Group(InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com'))))->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_an_activity()
+    public function it_is_not_equal_to_an_activity(): void
     {
         $this->beConstructedWith(InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com')));
 

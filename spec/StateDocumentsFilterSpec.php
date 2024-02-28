@@ -16,8 +16,6 @@ use Xabbuh\XApi\Model\Activity;
 use Xabbuh\XApi\Model\Agent;
 use Xabbuh\XApi\Model\InverseFunctionalIdentifier;
 use Xabbuh\XApi\Model\IRI;
-use Xabbuh\XApi\Model\LanguageMap;
-use Xabbuh\XApi\Model\Verb;
 
 class StateDocumentsFilterSpec extends ObjectBehavior
 {

@@ -4,11 +4,12 @@ namespace spec\Xabbuh\XApi\Model;
 
 use PhpSpec\ObjectBehavior;
 use Xabbuh\XApi\Model\Activity;
+use Xabbuh\XApi\Model\ContextActivities;
 use Xabbuh\XApi\Model\IRI;
 
 class ContextActivitiesSpec extends ObjectBehavior
 {
-    public function its_properties_are_empty_by_default()
+    public function its_properties_are_empty_by_default(): void
     {
         $this->getParentActivities()->shouldBeNull();
         $this->getGroupingActivities()->shouldBeNull();
@@ -16,7 +17,7 @@ class ContextActivitiesSpec extends ObjectBehavior
         $this->getOtherActivities()->shouldBeNull();
     }
 
-    public function it_returns_a_new_instance_with_parent_activities()
+    public function it_returns_a_new_instance_with_parent_activities(): void
     {
         $activity = new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'));
         $contextActivities = $this->withAddedParentActivity($activity);
@@ -24,7 +25,7 @@ class ContextActivitiesSpec extends ObjectBehavior
         $this->getParentActivities()->shouldBeNull();
 
         $contextActivities->shouldNotBe($this);
-        $contextActivities->shouldBeAnInstanceOf('\Xabbuh\XApi\Model\ContextActivities');
+        $contextActivities->shouldBeAnInstanceOf(ContextActivities::class);
 
         $parentActivities = $contextActivities->getParentActivities();
         $parentActivities->shouldBeArray();
@@ -32,11 +33,11 @@ class ContextActivitiesSpec extends ObjectBehavior
         $parentActivities->shouldHaveKeyWithValue(0, $activity);
     }
 
-    public function it_returns_a_new_instance_with_parent_activities_removed()
+    public function it_returns_a_new_instance_with_parent_activities_removed(): void
     {
         $activity = new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'));
 
-        $this->beConstructedWith(array($activity));
+        $this->beConstructedWith([$activity]);
 
         $contextActivities = $this->withoutParentActivities();
 
@@ -46,11 +47,11 @@ class ContextActivitiesSpec extends ObjectBehavior
         $parentActivities->shouldHaveKeyWithValue(0, $activity);
 
         $contextActivities->shouldNotBe($this);
-        $contextActivities->shouldBeAnInstanceOf('\Xabbuh\XApi\Model\ContextActivities');
+        $contextActivities->shouldBeAnInstanceOf(ContextActivities::class);
         $contextActivities->getParentActivities()->shouldBeNull();
     }
 
-    public function it_returns_a_new_instance_with_grouping_activities()
+    public function it_returns_a_new_instance_with_grouping_activities(): void
     {
         $activity = new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'));
         $contextActivities = $this->withAddedGroupingActivity($activity);
@@ -58,7 +59,7 @@ class ContextActivitiesSpec extends ObjectBehavior
         $this->getGroupingActivities()->shouldBeNull();
 
         $contextActivities->shouldNotBe($this);
-        $contextActivities->shouldBeAnInstanceOf('\Xabbuh\XApi\Model\ContextActivities');
+        $contextActivities->shouldBeAnInstanceOf(ContextActivities::class);
 
         $groupingActivities = $contextActivities->getGroupingActivities();
         $groupingActivities->shouldBeArray();
@@ -66,11 +67,11 @@ class ContextActivitiesSpec extends ObjectBehavior
         $groupingActivities->shouldHaveKeyWithValue(0, $activity);
     }
 
-    public function it_returns_a_new_instance_with_grouping_activities_removed()
+    public function it_returns_a_new_instance_with_grouping_activities_removed(): void
     {
         $activity = new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'));
 
-        $this->beConstructedWith(null, array($activity));
+        $this->beConstructedWith(null, [$activity]);
 
         $contextActivities = $this->withoutGroupingActivities();
 
@@ -80,11 +81,11 @@ class ContextActivitiesSpec extends ObjectBehavior
         $groupingActivities->shouldHaveKeyWithValue(0, $activity);
 
         $contextActivities->shouldNotBe($this);
-        $contextActivities->shouldBeAnInstanceOf('\Xabbuh\XApi\Model\ContextActivities');
+        $contextActivities->shouldBeAnInstanceOf(ContextActivities::class);
         $contextActivities->getGroupingActivities()->shouldBeNull();
     }
 
-    public function it_returns_a_new_instance_with_category_activities()
+    public function it_returns_a_new_instance_with_category_activities(): void
     {
         $activity = new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'));
         $contextActivities = $this->withAddedCategoryActivity($activity);
@@ -92,7 +93,7 @@ class ContextActivitiesSpec extends ObjectBehavior
         $this->getCategoryActivities()->shouldBeNull();
 
         $contextActivities->shouldNotBe($this);
-        $contextActivities->shouldBeAnInstanceOf('\Xabbuh\XApi\Model\ContextActivities');
+        $contextActivities->shouldBeAnInstanceOf(ContextActivities::class);
 
         $CategoryActivities = $contextActivities->getCategoryActivities();
         $CategoryActivities->shouldBeArray();
@@ -100,11 +101,11 @@ class ContextActivitiesSpec extends ObjectBehavior
         $CategoryActivities->shouldHaveKeyWithValue(0, $activity);
     }
 
-    public function it_returns_a_new_instance_with_category_activities_removed()
+    public function it_returns_a_new_instance_with_category_activities_removed(): void
     {
         $activity = new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'));
 
-        $this->beConstructedWith(null, null, array($activity));
+        $this->beConstructedWith(null, null, [$activity]);
 
         $contextActivities = $this->withoutCategoryActivities();
 
@@ -114,11 +115,11 @@ class ContextActivitiesSpec extends ObjectBehavior
         $categoryActivities->shouldHaveKeyWithValue(0, $activity);
 
         $contextActivities->shouldNotBe($this);
-        $contextActivities->shouldBeAnInstanceOf('\Xabbuh\XApi\Model\ContextActivities');
+        $contextActivities->shouldBeAnInstanceOf(ContextActivities::class);
         $contextActivities->getCategoryActivities()->shouldBeNull();
     }
 
-    public function it_returns_a_new_instance_with_other_activities()
+    public function it_returns_a_new_instance_with_other_activities(): void
     {
         $activity = new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'));
         $contextActivities = $this->withAddedOtherActivity($activity);
@@ -126,7 +127,7 @@ class ContextActivitiesSpec extends ObjectBehavior
         $this->getOtherActivities()->shouldBeNull();
 
         $contextActivities->shouldNotBe($this);
-        $contextActivities->shouldBeAnInstanceOf('\Xabbuh\XApi\Model\ContextActivities');
+        $contextActivities->shouldBeAnInstanceOf(ContextActivities::class);
 
         $otherActivities = $contextActivities->getOtherActivities();
         $otherActivities->shouldBeArray();
@@ -134,11 +135,11 @@ class ContextActivitiesSpec extends ObjectBehavior
         $otherActivities->shouldHaveKeyWithValue(0, $activity);
     }
 
-    public function it_returns_a_new_instance_with_other_activities_removed()
+    public function it_returns_a_new_instance_with_other_activities_removed(): void
     {
         $activity = new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'));
 
-        $this->beConstructedWith(null, null, null, array($activity));
+        $this->beConstructedWith(null, null, null, [$activity]);
 
         $contextActivities = $this->withoutOtherActivities();
 
@@ -148,7 +149,7 @@ class ContextActivitiesSpec extends ObjectBehavior
         $otherActivities->shouldHaveKeyWithValue(0, $activity);
 
         $contextActivities->shouldNotBe($this);
-        $contextActivities->shouldBeAnInstanceOf('\Xabbuh\XApi\Model\ContextActivities');
+        $contextActivities->shouldBeAnInstanceOf(ContextActivities::class);
         $contextActivities->getOtherActivities()->shouldBeNull();
     }
 }

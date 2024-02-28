@@ -2,6 +2,7 @@
 
 namespace spec\Xabbuh\XApi\Model;
 
+use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
 use Xabbuh\XApi\Model\Attachment;
 use Xabbuh\XApi\Model\IRI;
@@ -10,17 +11,17 @@ use Xabbuh\XApi\Model\LanguageMap;
 
 class AttachmentSpec extends ObjectBehavior
 {
-    function its_properties_can_be_read()
+    public function its_properties_can_be_read(): void
     {
-        $display = LanguageMap::create(array('en-US' => 'Text attachment'));
-        $description = LanguageMap::create(array('en-US' => 'Text attachment description'));
+        $languageMap = LanguageMap::create(['en-US' => 'Text attachment']);
+        $description = LanguageMap::create(['en-US' => 'Text attachment description']);
 
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            $display,
+            $languageMap,
             $description,
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly'),
             'some text content'
@@ -30,34 +31,34 @@ class AttachmentSpec extends ObjectBehavior
         $this->getContentType()->shouldReturn('text/plain');
         $this->getLength()->shouldReturn(18);
         $this->getSha2()->shouldReturn('bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545');
-        $this->getDisplay()->shouldReturn($display);
+        $this->getDisplay()->shouldReturn($languageMap);
         $this->getDescription()->shouldReturn($description);
         $this->getFileUrl()->equals(IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly'))->shouldReturn(true);
         $this->getContent()->shouldReturn('some text content');
     }
 
-    function it_throws_an_exception_when_an_attachment_does_not_contain_a_file_url_or_raw_content()
+    public function it_throws_an_exception_when_an_attachment_does_not_contain_a_file_url_or_raw_content(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment'))
+            LanguageMap::create(['en-US' => 'Text attachment'])
         );
 
-        $this->shouldThrow('\InvalidArgumentException')->duringInstantiation();
+        $this->shouldThrow(InvalidArgumentException::class)->duringInstantiation();
     }
 
-    function it_is_not_equal_to_other_attachment_if_usage_types_differ()
+    public function it_is_not_equal_to_other_attachment_if_usage_types_differ(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
@@ -66,23 +67,23 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_other_attachment_if_content_types_differ()
+    public function it_is_not_equal_to_other_attachment_if_content_types_differ(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
@@ -91,23 +92,23 @@ class AttachmentSpec extends ObjectBehavior
             'application/json',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_other_attachment_if_lengths_differ()
+    public function it_is_not_equal_to_other_attachment_if_lengths_differ(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
@@ -116,23 +117,23 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             65556,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_other_attachment_if_sha2_hashes_differ()
+    public function it_is_not_equal_to_other_attachment_if_sha2_hashes_differ(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
@@ -141,23 +142,23 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             18,
             'd14f1580a2cebb6f8d4a8a2fc0d13c67f970e84f8d15677a93ae95c9080df899',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_other_attachment_if_displays_differ()
+    public function it_is_not_equal_to_other_attachment_if_displays_differ(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
@@ -166,23 +167,23 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'JSON attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'JSON attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_other_attachment_if_only_this_attachment_has_a_description()
+    public function it_is_not_equal_to_other_attachment_if_only_this_attachment_has_a_description(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
@@ -191,7 +192,7 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
             null,
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
@@ -199,14 +200,14 @@ class AttachmentSpec extends ObjectBehavior
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_other_attachment_if_only_the_other_attachment_has_a_description()
+    public function it_is_not_equal_to_other_attachment_if_only_the_other_attachment_has_a_description(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
             null,
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
@@ -216,23 +217,23 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_other_attachment_if_descriptions_are_not_equal()
+    public function it_is_not_equal_to_other_attachment_if_descriptions_are_not_equal(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
@@ -241,23 +242,23 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-GB' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-GB' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_other_attachment_if_only_this_attachment_has_a_file_url()
+    public function it_is_not_equal_to_other_attachment_if_only_this_attachment_has_a_file_url(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
@@ -266,50 +267,50 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
-            null,
-            'some text content'
-        );
-
-        $this->equals($attachment)->shouldReturn(false);
-    }
-
-    function it_is_not_equal_to_other_attachment_if_only_the_other_attachment_has_a_file_url()
-    {
-        $this->beConstructedWith(
-            IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
-            'text/plain',
-            18,
-            'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             null,
             'some text content'
         );
 
-        $attachment = new Attachment(
-            IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
-            'text/plain',
-            18,
-            'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
-            IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
-        );
-
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_not_equal_to_other_attachment_if_file_urls_are_not_equal()
+    public function it_is_not_equal_to_other_attachment_if_only_the_other_attachment_has_a_file_url(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
+            null,
+            'some text content'
+        );
+
+        $attachment = new Attachment(
+            IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
+            'text/plain',
+            18,
+            'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
+            IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
+        );
+
+        $this->equals($attachment)->shouldReturn(false);
+    }
+
+    public function it_is_not_equal_to_other_attachment_if_file_urls_are_not_equal(): void
+    {
+        $this->beConstructedWith(
+            IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
+            'text/plain',
+            18,
+            'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/signature')
         );
 
@@ -318,23 +319,23 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/certificate')
         );
 
         $this->equals($attachment)->shouldReturn(false);
     }
 
-    function it_is_equal_to_other_attachment_if_all_properties_are_equal()
+    public function it_is_equal_to_other_attachment_if_all_properties_are_equal(): void
     {
         $this->beConstructedWith(
             IRI::fromString('http://id.tincanapi.com/attachment/supporting_media'),
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 
@@ -343,8 +344,8 @@ class AttachmentSpec extends ObjectBehavior
             'text/plain',
             18,
             'bd1a58265d96a3d1981710dab8b1e1ed04a8d7557ea53ab0cf7b44c04fd01545',
-            LanguageMap::create(array('en-US' => 'Text attachment')),
-            LanguageMap::create(array('en-US' => 'Text attachment description')),
+            LanguageMap::create(['en-US' => 'Text attachment']),
+            LanguageMap::create(['en-US' => 'Text attachment description']),
             IRL::fromString('http://tincanapi.com/conformancetest/attachment/fileUrlOnly')
         );
 

@@ -19,12 +19,14 @@ use Xabbuh\XApi\Model\IRL;
 
 class InverseFunctionalIdentifierSpec extends ObjectBehavior
 {
-    function it_can_be_built_with_an_mbox()
+    public function it_can_be_built_with_an_mbox(): void
     {
         $iri = IRI::fromString('mailto:conformancetest@tincanapi.com');
         $this->beConstructedThrough(
-            array(InverseFunctionalIdentifier::class, 'withMbox'),
-            array($iri)
+            static function (IRI $mbox): InverseFunctionalIdentifier {
+                return InverseFunctionalIdentifier::withMbox($mbox);
+            },
+            [$iri]
         );
 
         $this->getMbox()->shouldReturn($iri);
@@ -33,11 +35,13 @@ class InverseFunctionalIdentifierSpec extends ObjectBehavior
         $this->getAccount()->shouldReturn(null);
     }
 
-    function it_can_be_built_with_an_mbox_sha1_sum()
+    public function it_can_be_built_with_an_mbox_sha1_sum(): void
     {
         $this->beConstructedThrough(
-            array(InverseFunctionalIdentifier::class, 'withMboxSha1Sum'),
-            array('db77b9104b531ecbb0b967f6942549d0ba80fda1')
+            static function (string $mboxSha1Sum): InverseFunctionalIdentifier {
+                return InverseFunctionalIdentifier::withMboxSha1Sum($mboxSha1Sum);
+            },
+            ['db77b9104b531ecbb0b967f6942549d0ba80fda1']
         );
 
         $this->getMbox()->shouldReturn(null);
@@ -46,11 +50,13 @@ class InverseFunctionalIdentifierSpec extends ObjectBehavior
         $this->getAccount()->shouldReturn(null);
     }
 
-    function it_can_be_built_with_an_openid()
+    public function it_can_be_built_with_an_openid(): void
     {
         $this->beConstructedThrough(
-            array(InverseFunctionalIdentifier::class, 'withOpenId'),
-            array('http://openid.tincanapi.com')
+            static function (string $openId): InverseFunctionalIdentifier {
+                return InverseFunctionalIdentifier::withOpenId($openId);
+            },
+            ['http://openid.tincanapi.com']
         );
 
         $this->getMbox()->shouldReturn(null);
@@ -59,12 +65,14 @@ class InverseFunctionalIdentifierSpec extends ObjectBehavior
         $this->getAccount()->shouldReturn(null);
     }
 
-    function it_can_be_built_with_an_account()
+    public function it_can_be_built_with_an_account(): void
     {
         $account = new Account('test', IRL::fromString('https://tincanapi.com'));
         $this->beConstructedThrough(
-            array(InverseFunctionalIdentifier::class, 'withAccount'),
-            array($account)
+            static function (Account $account): InverseFunctionalIdentifier {
+                return InverseFunctionalIdentifier::withAccount($account);
+            },
+            [$account]
         );
 
         $this->getMbox()->shouldReturn(null);
@@ -73,56 +81,56 @@ class InverseFunctionalIdentifierSpec extends ObjectBehavior
         $this->getAccount()->shouldReturn($account);
     }
 
-    function it_is_equal_when_mboxes_are_equal()
+    public function it_is_equal_when_mboxes_are_equal(): void
     {
-        $this->beConstructedThrough('withMbox', array(IRI::fromString('mailto:conformancetest@tincanapi.com')));
+        $this->beConstructedThrough('withMbox', [IRI::fromString('mailto:conformancetest@tincanapi.com')]);
 
         $this->equals(InverseFunctionalIdentifier::withMbox(IRI::fromString('mailto:conformancetest@tincanapi.com')))->shouldReturn(true);
     }
 
-    function it_is_equal_when_mbox_sha1_sums_are_equal()
+    public function it_is_equal_when_mbox_sha1_sums_are_equal(): void
     {
-        $this->beConstructedThrough('withMboxSha1Sum', array('db77b9104b531ecbb0b967f6942549d0ba80fda1'));
+        $this->beConstructedThrough('withMboxSha1Sum', ['db77b9104b531ecbb0b967f6942549d0ba80fda1']);
 
         $this->equals(InverseFunctionalIdentifier::withMboxSha1Sum('db77b9104b531ecbb0b967f6942549d0ba80fda1'))->shouldReturn(true);
     }
 
-    function it_is_equal_when_open_ids_are_equal()
+    public function it_is_equal_when_open_ids_are_equal(): void
     {
-        $this->beConstructedThrough('withOpenId', array('http://openid.tincanapi.com'));
+        $this->beConstructedThrough('withOpenId', ['http://openid.tincanapi.com']);
 
         $this->equals(InverseFunctionalIdentifier::withOpenId('http://openid.tincanapi.com'))->shouldReturn(true);
     }
 
-    function it_is_equal_when_accounts_are_equal()
+    public function it_is_equal_when_accounts_are_equal(): void
     {
-        $this->beConstructedThrough('withAccount', array(new Account('test', IRL::fromString('https://tincanapi.com'))));
+        $this->beConstructedThrough('withAccount', [new Account('test', IRL::fromString('https://tincanapi.com'))]);
 
         $this->equals(InverseFunctionalIdentifier::withAccount(new Account('test', IRL::fromString('https://tincanapi.com'))))->shouldReturn(true);
     }
 
-    function its_mbox_value_can_be_retrieved_as_a_string()
+    public function its_mbox_value_can_be_retrieved_as_a_string(): void
     {
         $this->beConstructedWithMbox(IRI::fromString('mailto:conformancetest@tincanapi.com'));
 
         $this->__toString()->shouldReturn('mailto:conformancetest@tincanapi.com');
     }
 
-    function its_mbox_sha1_sum_value_can_be_retrieved_as_a_string()
+    public function its_mbox_sha1_sum_value_can_be_retrieved_as_a_string(): void
     {
         $this->beConstructedWithMboxSha1Sum('db77b9104b531ecbb0b967f6942549d0ba80fda1');
 
         $this->__toString()->shouldReturn('db77b9104b531ecbb0b967f6942549d0ba80fda1');
     }
 
-    function its_open_id_value_can_be_retrieved_as_a_string()
+    public function its_open_id_value_can_be_retrieved_as_a_string(): void
     {
         $this->beConstructedWithOpenId('http://openid.tincanapi.com');
 
         $this->__toString()->shouldReturn('http://openid.tincanapi.com');
     }
 
-    function its_account_value_can_be_retrieved_as_a_string()
+    public function its_account_value_can_be_retrieved_as_a_string(): void
     {
         $this->beConstructedWithAccount(new Account('test', IRL::fromString('https://tincanapi.com')));
 

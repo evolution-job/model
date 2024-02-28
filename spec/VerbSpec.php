@@ -27,7 +27,7 @@ class VerbSpec extends ObjectBehavior
     function its_properties_can_be_read()
     {
         $iri = IRI::fromString('http://tincanapi.com/conformancetest/verbid');
-        $languageMap = LanguageMap::create(array('en-US' => 'test'));
+        $languageMap = LanguageMap::create(['en-US' => 'test']);
         $this->beConstructedWith($iri, $languageMap);
 
         $this->getId()->shouldReturn($iri);
@@ -45,7 +45,7 @@ class VerbSpec extends ObjectBehavior
 
     function it_creates_voiding_verb_through_factory_method()
     {
-        $this->beConstructedThrough(array(Verb::class, 'createVoidVerb'));
+        $this->beConstructedThrough([Verb::class, 'createVoidVerb']);
 
         $this->shouldHaveType(Verb::class);
         $this->isVoidVerb()->shouldReturn(true);

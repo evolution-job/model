@@ -22,8 +22,8 @@ class DefinitionSpec extends ObjectBehavior
 {
     function its_properties_can_be_read()
     {
-        $name = LanguageMap::create(array('en-US' => 'test'));
-        $description = LanguageMap::create(array('en-US' => 'test'));
+        $name = LanguageMap::create(['en-US' => 'test']);
+        $description = LanguageMap::create(['en-US' => 'test']);
         $this->beConstructedWith(
             $name,
             $description,
@@ -211,8 +211,8 @@ class DefinitionSpec extends ObjectBehavior
         $extensions = new \SplObjectStorage();
         $extensions->attach(IRI::fromString('http://id.tincanapi.com/extension/topic'), 'Conformance Testing');
         $this->beConstructedWith(
-            LanguageMap::create(array('en-US' => 'test')),
-            LanguageMap::create(array('en-US' => 'test')),
+            LanguageMap::create(['en-US' => 'test']),
+            LanguageMap::create(['en-US' => 'test']),
             IRI::fromString('http://id.tincanapi.com/activitytype/unit-test'),
             IRL::fromString('https://github.com/adlnet/xAPI_LRS_Test'),
             new Extensions($extensions)
@@ -221,8 +221,8 @@ class DefinitionSpec extends ObjectBehavior
         $extensions = new \SplObjectStorage();
         $extensions->attach(IRI::fromString('http://id.tincanapi.com/extension/topic'), 'Conformance Testing');
         $definition = $this->createEmptyDefinition();
-        $definition = $definition->withName(LanguageMap::create(array('en-US' => 'test')));
-        $definition = $definition->withDescription(LanguageMap::create(array('en-US' => 'test')));
+        $definition = $definition->withName(LanguageMap::create(['en-US' => 'test']));
+        $definition = $definition->withDescription(LanguageMap::create(['en-US' => 'test']));
         $definition = $definition->withType(IRI::fromString('http://id.tincanapi.com/activitytype/unit-test'));
         $definition = $definition->withMoreInfo(IRL::fromString('https://github.com/adlnet/xAPI_LRS_Test'));
         $definition = $definition->withExtensions(new Extensions($extensions));

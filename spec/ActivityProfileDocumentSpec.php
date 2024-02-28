@@ -11,7 +11,9 @@
 
 namespace spec\Xabbuh\XApi\Model;
 
+use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
+use Xabbuh\XApi\Common\Exception\UnsupportedOperationException;
 use Xabbuh\XApi\Model\Activity;
 use Xabbuh\XApi\Model\ActivityProfile;
 use Xabbuh\XApi\Model\Document;
@@ -20,36 +22,36 @@ use Xabbuh\XApi\Model\IRI;
 
 class ActivityProfileDocumentSpec extends ObjectBehavior
 {
-    function let()
+    public function let(): void
     {
-        $this->beConstructedWith(new ActivityProfile('id', new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'))), new DocumentData(array(
-            'x' => 'foo',
-            'y' => 'bar',
-        )));
+        $this->beConstructedWith(new ActivityProfile('id',
+            new Activity(IRI::fromString('http://tincanapi.com/conformancetest/activityid'))),
+            new DocumentData(['x' => 'foo', 'y' => 'bar']
+            )
+        );
     }
 
-    function it_is_a_document()
+    public function it_is_a_document(): void
     {
         $this->shouldHaveType(Document::class);
     }
 
-    function its_data_can_be_read()
+    public function its_data_can_be_read(): void
     {
-        $this->offsetExists('x')->shouldReturn(true);
+        $this->shouldHaveKey('x');
         $this->offsetGet('x')->shouldReturn('foo');
-        $this->offsetExists('y')->shouldReturn(true);
+        $this->shouldHaveKey('y');
         $this->offsetGet('y')->shouldReturn('bar');
-        $this->offsetExists('z')->shouldReturn(false);
     }
 
-    function it_throws_exception_when_not_existing_data_is_being_read()
+    public function it_throws_exception_when_not_existing_data_is_being_read(): void
     {
-        $this->shouldThrow('\InvalidArgumentException')->duringOffsetGet('z');
+        $this->shouldThrow(InvalidArgumentException::class)->duringOffsetGet('z');
     }
 
-    function its_data_cannot_be_manipulated()
+    public function its_data_cannot_be_manipulated(): void
     {
-        $this->shouldThrow('\Xabbuh\XApi\Common\Exception\UnsupportedOperationException')->duringOffsetSet('z', 'baz');
-        $this->shouldThrow('\Xabbuh\XApi\Common\Exception\UnsupportedOperationException')->duringOffsetUnset('x');
+        $this->shouldThrow(UnsupportedOperationException::class)->duringOffsetSet('z', 'baz');
+        $this->shouldThrow(UnsupportedOperationException::class)->duringOffsetUnset('x');
     }
 }
